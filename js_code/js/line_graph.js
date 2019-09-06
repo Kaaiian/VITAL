@@ -2,11 +2,11 @@ class Linegraph {
 
     constructor(){
         //Create the svg and margin for Linegraph.
-        this.margin = {top: 5, right: 5, bottom: 15, left: 5};
+        this.margin = {top: 5, right: 5, bottom: 45, left: 5};
         let line_chart = d3.select("#Line_chart").classed("line_graph_view", true);
         this.svgBounds = line_chart.node().getBoundingClientRect();
         this.svgWidth = this.svgBounds.width - this.margin.left - this.margin.right;
-        this.svgHeight = this.svgBounds.width/8 - this.margin.top - this.margin.bottom;
+        this.svgHeight = this.svgBounds.width/5 - this.margin.top - this.margin.bottom;
         this.svg = line_chart.append("svg")
             .attr("width", this.svgWidth)
             .attr("height", this.svgHeight)
@@ -66,12 +66,13 @@ class Linegraph {
             dict_number.push(avearge);
             count++
         });
-        count = 0
+
+        let count2 = 0
         let data = {}
         dict_name.forEach(function(d){
-            // data['element'] = dict_name[count];
-            data[d] = dict_number[count];
-            count++})
+            // data['element'] = dict_name[count2];
+            data[d] = dict_number[count2];
+            count2++})
         let dict_axis = [Math.floor(min_d),Math.floor(max_d) +1]
         let domain1 = rangefuc(0,dict_axis[1],count);
         domain1.push(dict_axis[1]);
@@ -123,15 +124,16 @@ class Linegraph {
 
 
         // Create the texts for each element below each bar.
-        let r_Text =  r_group.selectAll('text').data(dict_name);
-        let size = Math.min(this.svgHeight*0.04,widthCur*0.5)
+        let r_Text =  r_group.selectAll('text').data(data);
+        // let size = Math.min(this.svgHeight*0.04,widthCur*0.5)
+        let size = Math.min(this.svgHeight*0.1, widthCur*0.4)
         r_Text
             .enter()
             .append('text')
-            .attr("y", this.svgHeight)
+            .attr("y", d => this.svgHeight*0.2+heightCur-d.value*heightCur/dict_axis[1] - 4)
             .attr("x", (d,i)=>this.svgWidth*0.05+i*widthCur+widthCur*0.2)
             .style('font-size', d=> size+'px')
-            .text(d=> d);
+            .text(d=> d.key);
 
         // Create the axis for these bars.
         let yScale = d3.scaleLinear()
@@ -139,12 +141,12 @@ class Linegraph {
             .range([this.svgHeight*0.2, this.svgHeight*0.95])
             .nice()
 
-        let yAxis_left = d3.axisLeft(yScale).tickSizeOuter(0);
+        let yAxis_left = d3.axisLeft(yScale).tickSizeOuter(0).ticks(5);
 
         resibar.append('g').classed('axis', true)
                 .attr('id', 'y_axis')
                 .attr('transform', "translate("+this.svgWidth*0.05+"," +0 + ")").call(yAxis_left)
-                .style('font-size', d=>this.svgHeight*0.05+'px')
+                .style('font-size', d=>this.svgHeight*0.07+'px')
                 .style('text-anchor', 'middle');
         let rtext_barsy = resibar.select('#y_axis').selectAll('g').selectAll('text');
         rtext_barsy.attr('x', -this.svgWidth*0.02)

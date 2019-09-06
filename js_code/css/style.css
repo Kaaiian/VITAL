@@ -18,11 +18,11 @@
       "e e e e e e e e";
   }
   /* grid-template-areas:
-    "d d d d d d d d"
-    "a a a a b b c c"
-    "a a a a b b c c"
-    "a a a a b b c c"
-    "r r r r r r e e"; */
+    "c c c c c c c c"
+    "c c c c c c c c"
+    "e e e e e e e e"
+    "e e e e e e e e"
+    "e e e e e e e e"; */
 /* } */
 
 .ptable_view {
