@@ -7,20 +7,21 @@ class Periodic_table {
      * and to populate the legend.
      */
 
-    constructor(ptable, act_vs_pre, line_graph, info, tsne){
+    // constructor(ptable, act_vs_pre, line_graph, info, tsne){
+    constructor(ptable, act_vs_pre, line_graph, tsne){
         //Create the svg and margin for Periodic_table.
         this.margin = {top: 10, right: 5, bottom: 20, left: 5};
-        let divyearChart = d3.select("#Periodic_Table_Chart").classed("ptable_view", true);
-        this.svgBounds = divyearChart.node().getBoundingClientRect();
+        let divptable = d3.select("#Periodic_Table_Chart").classed("ptable_view", true);
+        this.svgBounds = divptable.node().getBoundingClientRect();
         this.svgWidth = this.svgBounds.width - this.margin.left - this.margin.right;
         this.svgHeight = parseInt(this.svgWidth*3/5);
-        this.svg = divyearChart.append("svg")
+        this.svg = divptable.append("svg")
             .attr("width", this.svgWidth)
             .attr("height", this.svgHeight)
         this.ptable = ptable;
         this.act_vs_pre = act_vs_pre;
         this.line_graph = line_graph;
-        this.info = info;
+        // this.info = info;
         this.tsne = tsne;
         this.selectedElements = []
         this.dict = []
@@ -255,7 +256,7 @@ class Periodic_table {
                 })
             }
             that.text = that.text.slice(0, -2) + '.';
-            window.setTimeout(update_axis, 300);
+            window.setTimeout(update_axis, 1000);
         };
         updateBarsCharts()
         // update_dict read the data about the selected elements.
@@ -268,8 +269,8 @@ class Periodic_table {
         // update_axis find the max and min about the selected elements's residual value and then ask to redraw the residual bars.
         function update_axis(){
             that.dict_axis = [];
-            let max_d = -12000000000;
-            let min_d = 12000000000;
+            let max_d = -120000;
+            let min_d = 120000;
             let count = 0;
             Object.keys(that.dict).forEach(function(key) {
                 if(max_d < parseFloat(that.dict[key]['residual'])){
@@ -288,14 +289,14 @@ class Periodic_table {
         //update_barsH make the data which will represent the numbers of formulae in each residual range.
         function update_barsH(count){
             let how_many = 5;
+            if(count >50){
+                how_many = 15;
+            }
             if(count >20){
-                how_many = 10;
+                how_many = 25;
             }
-            if(count >100){
-                how_many = 20;
-            }
-            if(count >200){
-                how_many = 30;
+            if(count >250){
+                how_many = 40;
             }
 
             let domain1 = rangefuc(that.dict_axis[0],that.dict_axis[1],how_many);
@@ -320,8 +321,10 @@ class Periodic_table {
             let heightCur =parseInt(that.svgHeight/12);
             let how_many = that.barHeight_list.length;
             let x_rate = widthCur*5/how_many;
-            let range1 = ['#fcfbfd','#efedf5','#dadaeb','#bcbddc','#9e9ac8','#807dba','#6a51a3','#4a1486'];
-            let domain1 = [0,2,5,20,60,100,180,300]
+            // let range1 = ['#fcfbfd','#efedf5','#dadaeb','#bcbddc','#9e9ac8','#807dba','#6a51a3','#4a1486'];
+            // let domain1 = [0,2,5,20,60,100,180,300]
+            let range1 = ['#c9c9c9','#c9c9c9'];
+            let domain1 = [0, 300]
             let colorScale1 = d3.scaleLinear()
                 .domain(domain1)
                 .range(range1);

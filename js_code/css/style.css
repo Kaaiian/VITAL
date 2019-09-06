@@ -1,4 +1,9 @@
-
+.header {
+    font-family: "Arvo";
+    font-size:50px;
+    color: #464646;
+    background-color: rgb(200, 200, 200);
+}
 
 
 .wrapper {
@@ -11,8 +16,14 @@
       "a a a a b b c c"
       "a a a a b b c c"
       "e e e e e e e e";
-
-}
+  }
+  /* grid-template-areas:
+    "d d d d d d d d"
+    "a a a a b b c c"
+    "a a a a b b c c"
+    "a a a a b b c c"
+    "r r r r r r e e"; */
+/* } */
 
 .ptable_view {
     /* display: inline-block;
@@ -58,6 +69,7 @@ body {
     font-family: Lato;
     padding:40px;
     background-color: rgb(255, 255, 255);
+    /* background-color: rgb(220, 220, 220); */
 }
 
 h2 {
@@ -153,28 +165,6 @@ circle.act_vs_pred{
     stroke-dasharray: 4;
 }
 
-.republican{
-    fill: #de2d26;
-    color: #de2d26;
-    text-anchor:start;
-}
-
-.democrat{
-    fill: #3182bd;
-    color: #3182bd;
-    text-anchor:start;
-}
-
-.independent{
-    fill: #45AD6A;
-    color: #45AD6A;
-    text-anchor:start;
-}
-
-.votesPercentage{
-    stroke: #eee;
-}
-
 .nothighlighted{
     stroke: #008000;
     stroke-width:1;
@@ -202,8 +192,8 @@ circle.selected{
 circle.not_selected {
 	/* stroke: #000000; */
 	stroke-width, 0;
-	fill: #b8c6dd;
-    fill-opacity: 0.99;
+	fill: #c9c9c9;
+    fill-opacity: 0.79;
 }
 
 h2{

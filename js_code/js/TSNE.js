@@ -6,7 +6,7 @@ class TSNE {
 
 
         this.linegraph = linegraph;
-        this.margin = {top: 10, right: 10, bottom: 45, left: 45};
+        this.margin = {top: 10, right: 10, bottom: 55, left: 65};
         let tsne = d3.select("#TSNE_Chart").classed("tsne_view", true);
         this.svgBounds = tsne.node().getBoundingClientRect();
         this.svgWidth = this.svgBounds.width - this.margin.left - this.margin.right;
@@ -33,40 +33,109 @@ class TSNE {
         this.svg.select('#tsne_xaxis').append('g').attr('id', 'tsne_bottom_xaxis')
         this.svg.select('#tsne_xaxis').append('g').attr('id', 'tsne_xlabel').append('text')
                 .text('Component 1').attr("transform", "translate(" + this.svgWidth*0.55 + "," + (this.svgHeight*1 - 5) + ")").style("text-anchor", "middle")
-                .style('font-size', d=>this.margin.bottom*0.2+'px')
+                .style('font-size', d=>this.svgWidth* 0.04+'px')
         this.svg.select('#tsne_plot').append('g').attr('id', 'tsne_yaxis')
         this.svg.select('#tsne_yaxis').append('g').attr('id', 'tsne_left_yaxis')
         this.svg.select('#tsne_yaxis').append('g').attr('id', 'tsne_right_yaxis')
         this.svg.select('#tsne_yaxis').append('g').attr('id', 'tsne_ylabel').append('text')
                 .text('Component 2').attr("transform", "rotate(-90)").attr("x", -this.svgHeight*0.45).attr('dy', (this.svgWidth*0 + 15)).style("text-anchor", "middle")
-                .style('font-size', d=>this.margin.left*0.2+'px')
+                .style('font-size', d=>this.svgWidth* 0.04+'px')
 
         // make buttons for switching properties residual/actual band gap
-        let buttons = tsne.append('svg')
-            .attr('id', 'buttons_svg')
-            .attr('width', this.svgWidth)
+        let button0 = tsne.append('svg')
+            .attr('id', 'button0_svg')
+            .attr('x', this.svgWidth/4 * 2)
+            .attr('width', this.svgWidth/4)
+            .attr('height', this.svgWidth*0.06)
+
+        let button1 = tsne.append('svg')
+            .attr('id', 'button1_svg')
+            .attr('x', this.svgWidth/4 * 2)
+            .attr('width', this.svgWidth/4)
+            .attr('height', this.svgWidth*0.06)
+
+        let button2 = tsne.append('svg')
+            .attr('id', 'button2_svg')
+            .attr('x', this.svgWidth/4 * 3)
+            .attr('width', this.svgWidth/4)
+            .attr('height', this.svgWidth*0.06)
+
+        let button3= tsne.append('svg')
+            .attr('id', 'button3_svg')
+            .attr('x', this.svgWidth/4 * 4)
+            .attr('width', this.svgWidth/4)
             .attr('height', this.svgWidth*0.06)
 
         // add button 'rect'
         let that = this
-        buttons.append('rect')
-            .attr('x', this.svgWidth/4)
+        button1.append('rect')
+            .attr('x', '0')
             .attr('y', '0')
-            .attr('width', this.svgWidth*0.7)
+            .attr('width', this.svgWidth*0.2)
             .attr('height', this.svgWidth*0.06)
             .attr('fill', 'silver')
             .attr('stroke', 'black')
-            .on('click', d => this.buttonClick(d, that))
+            .attr("rx", 10)
+            .attr("ry", 10)
+            .on('click', d => this.button1Click(d, that));
+        // add button text
+        button1.append('text')
+            .attr('x', 0 + this.svgWidth*0.02)
+            .attr('y', this.svgWidth*0.03)
+            .style('alignment-baseline', "middle")
+            .style('font-size', d=>this.svgWidth* 0.032+'px')
+            // .style('')
+            .text('actual')
+            .on('click', d => this.button1Click(d, that));
+
+        // add button 'rect'
+        button2.append('rect')
+            .attr('x', '0')
+            .attr('y', '0')
+            .attr('width', this.svgWidth*0.2)
+            .attr('height', this.svgWidth*0.06)
+            .attr('fill', 'silver')
+            .attr('stroke', 'black')
+            .attr("rx", 10)
+            .attr("ry", 10)
+            .on('click', d => this.button2Click(d, that));
 
         // add button text
-        buttons.append('text')
-            .attr('x', this.svgWidth/3.5)
-            .attr('y', this.svgWidth*0.02)
+        button2.append('text')
+            .attr('x', 0 + this.svgWidth*0.02)
+            .attr('y', this.svgWidth*0.03)
             .style('alignment-baseline', "middle")
-            .style('font-size', d=>this.svgWidth* 0.03+'px')
+            .style('font-size', d=>this.svgWidth* 0.032+'px')
             // .style('')
-            .text('"toggle displayed values" bandgap/residual (eV)')
-            .on('click', d => this.buttonClick(d, that))
+            .text('prediction')
+            .on('click', d => this.button2Click(d, that));
+
+        // add button 'rect'
+        button3.append('rect')
+            .attr('x', '0')
+            .attr('y', '0')
+            .attr('width', this.svgWidth*0.2)
+            .attr('height', this.svgWidth*0.06)
+            .attr('fill', 'silver')
+            .attr('stroke', 'black')
+            .attr("rx", 10)
+            .attr("ry", 10)
+            .on('click', d => this.button3Click(d, that));
+
+        // add button text
+        button3.append('text')
+            .attr('x', 0 + this.svgWidth*0.02)
+            .attr('y', this.svgWidth*0.03)
+            .style('alignment-baseline', "middle")
+            .style('font-size', d=>this.svgWidth* 0.032+'px')
+            // .style('')
+            .text('residual')
+            .on('click', d => this.button3Click(d, that));
+
+
+
+
+
 
         // add color bar to tsne
         this.svg.select('#tsne_plot').append('g').attr('id', 'tsne_colorbar')
@@ -137,7 +206,7 @@ class TSNE {
                 .range(['#c7e9b4','#7fcdbb','#41b6c4','#1d91c0','#225ea8','#253494','#081d58'])
             this.colorScalePred = d3.scaleLinear()
                 .domain(this.makeArr(d3.min(pred), d3.max(pred), 7))
-                .range(['#ffffd9','#edf8b1','#c7e9b4','#7fcdbb','#41b6c4','#1d91c0','#225ea8','#253494','#081d58'])
+                .range(['#c7e9b4','#7fcdbb','#41b6c4','#1d91c0','#225ea8','#253494','#081d58'])
             this.colorScaleRes = d3.scaleLinear()
                 .domain(this.makeArr(-max_abs, max_abs, 7))
                 .range(['#67001f','#b2182b','#d6604d', '#92c5de','#4393c3','#2166ac','#053061'])
@@ -295,6 +364,9 @@ class TSNE {
         yAxis_R.selectAll(".tick line")
             .attr("transform", "scale(-1,1)")
 
+        xAxis_B.selectAll("text").attr('font-size', d=>this.svgWidth* 0.032+'px')
+        yAxis_L.selectAll("text").attr('font-size', d=>this.svgWidth* 0.032+'px')
+
         // defin tooltip html style
         this.tip.html((d)=> {
             let tooltip_data = {
@@ -346,20 +418,28 @@ class TSNE {
         }
     };
 
-    buttonClick(d, that){
+    button1Click(d, that){
         // handle button click to switch properties
         let selectedElements = []
-        if (that.buttonClicked=='false'){
-            that.buttonClicked = 'true';
             that.activeColorScale = that.colorScaleAct;
             that.activeButton = 'actual'
-            this.plot_data(this.current_element_data, this.colorScaleAct)
-        }else{
-            that.buttonClicked = 'false';
+            this.plot_data(this.current_element_data, this.activeColorScale)
+        this.onClick(d, this)
+    }
+    button2Click(d, that){
+        // handle button click to switch properties
+        let selectedElements = []
+            that.activeColorScale = that.colorScalePred;
+            that.activeButton = 'predicted'
+            this.plot_data(this.current_element_data, this.activeColorScale)
+        this.onClick(d, this)
+    }
+    button3Click(d, that){
+        // handle button click to switch properties
+        let selectedElements = []
             that.activeColorScale = that.colorScaleRes;
             that.activeButton = 'residual'
-            this.plot_data(this.current_element_data, this.colorScaleRes)
-        }
+            this.plot_data(this.current_element_data, this.activeColorScale)
         this.onClick(d, this)
     }
 

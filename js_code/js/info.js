@@ -10,19 +10,18 @@ class Info {
         this.svg = Info_box.append("svg")
             .attr("width", this.svgWidth)
             .attr("height", this.svgHeight/20)
-            .attr('id', 'info_svg') 
-            
+            .attr('id', 'info_svg')
+
         let text_area1 = this.svg.append('g').attr('id', 'text_area1')
         let text_area2 = this.svg.append('g').attr('id', 'text_area2')
         let text_area3 = this.svg.append('g').attr('id', 'text_area3')
         let text_area4 = this.svg.append('g').attr('id', 'text_area4')
         let text_area5 = this.svg.append('g').attr('id', 'text_area5')
-        
-        
+
         //Create the link to the database
         text_area1.append("a")
             .attr("xlink:href", "https://pubs.acs.org/doi/suppl/10.1021/acs.jpclett.8b00124",'_blank')
-            .append("rect")  
+            .append("rect")
             .attr("x", this.margin.left)
             .attr("y", this.margin.top)
             .attr("height", this.svgHeight/30)
@@ -46,7 +45,7 @@ class Info {
          //Create the link to the github.
         text_area2.append("a")
             .attr("xlink:href", "https://github.com/kaaiian/dataviscourse-pr-visualize_material_informatics",'_blank')
-            .append("rect")  
+            .append("rect")
             .attr("x", this.margin.left+this.svgWidth/6)
             .attr("y", this.margin.top)
             .attr("height", this.svgHeight/30)
@@ -70,7 +69,7 @@ class Info {
         //Create the link to the Kaai's email
         text_area3.append("a")
             .attr("xlink:href", "mailto:jkkauwe@gmail.com",'_blank')
-            .append("rect")  
+            .append("rect")
             .attr("x", this.margin.left+this.svgWidth/6*2)
             .attr("y", this.margin.top)
             .attr("height", this.svgHeight/30)
@@ -93,7 +92,7 @@ class Info {
          //Create the link to the Yucheng's email
         text_area4.append("a")
             .attr("xlink:href", "mailto:dominate0704@gmail.com",'_blank')
-            .append("rect")  
+            .append("rect")
             .attr("x", this.margin.left+3*this.svgWidth/6)
             .attr("y", this.margin.top)
             .attr("height", this.svgHeight/30)
@@ -114,10 +113,10 @@ class Info {
             .text("Yucheng Yang's Email");
 
 
-         //Create the link to the youtube tutorial videa.    
+         //Create the link to the youtube tutorial videa.
         text_area5.append("a")
             .attr("xlink:href", "https://www.youtube.com/watch?v=gLSGHfJ0DaU&t=4s",'_blank')
-            .append("rect")  
+            .append("rect")
             .attr("x", this.margin.left+4*this.svgWidth/6)
             .attr("y", this.margin.top)
             .attr("height", this.svgHeight/30)
