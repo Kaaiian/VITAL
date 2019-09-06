@@ -1,4 +1,4 @@
-# Visualize Materials Predictions (VMP)
+# VIsualization Tool for Atomic modeLs (VITAL)
 
 This tool is made to allow researchers to interactively visualize the behavior of materials predictions relative to their composition.
 
